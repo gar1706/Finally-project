@@ -1,0 +1,628 @@
+﻿@model IEnumerable<Finally_project.Models.StudentRow>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+ 
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+
+
+    <p>
+        Typing out examples as I read through the book to help me internalize what I'm reading.
+    </p>
+
+    <div class="wrapper">
+
+
+        <ul>
+            <li>
+                <a href="/ProfessorRows" class="button">
+                    Professers
+                </a>
+                <p>
+                </p>
+            </li>
+            <li>
+
+                <p>
+                    <a href="/StudentRows/" class="button"> Students </a>
+                </p>
+            </li>
+            <li>
+
+                <a href="/ProfessorRows/Create" class="button">
+                    Add Professors
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <hr />
+
+    <div class="container">
+        <div class="box">
+            <p>
+                <table>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Course</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                    </tr>
+
+                    @foreach (StudentRow row in (IEnumerable<StudentRow>)ViewData["Row"])
+                    {
+                        <tr>
+                            <td>@row.fname</td>
+                            <td>@row.lname</td>
+                            <td>@row.courseTitle</td>
+                            <td>@row.email</td>
+                            <td>@row.phone</td>
+                            <td>@row.address</td>
+                        </tr>
+                    }
+
+
+                </table>
+
+            </p>
+        </div>
+    </div>
+
+ 
+    <hr />
+
+
+    <hr />
+
+
+    <hr />
+
+
+
+    <hr />
+
+
+
+    <hr />
+
+
+
+    <hr />
+
+
+    <hr />
+
+    <div class="hopeful-grid-layout">
+        Hello
+    </div>
+</div>
+<style>
+    body {
+        margin: 0;
+    }
+
+    hr {
+        margin: 2em 0;
+    }
+
+    .wrapper {
+        background-color: lightblue;
+        border-spacing: 11px;
+        display: table;
+        width: 100%;
+    }
+
+        .wrapper ul {
+            display: table-row;
+        }
+
+        .wrapper li {
+            background-color: white;
+            border: 1px solid grey;
+            display: table-cell;
+            padding: 10px;
+            vertical-align: center;
+            width: 33.333%;
+        }
+
+    /*----*/
+
+    .container {
+        border: 1px solid blue;
+        display: flow-root;
+    }
+
+    .box {
+        border: 1px solid purple;
+        float: left;
+    }
+
+    /*---*/
+    .shape-test-1 {
+        max-width: 80ch;
+    }
+
+        .shape-test-1 img {
+            float: left;
+            display: block;
+            margin: 0 16px 16px 0;
+            shape-outside: circle(50%);
+        }
+
+    /*---*/
+
+    .columnar {
+        column-count: 3;
+        column-width: 50ch;
+        margin: 0 auto;
+        max-width: 160ch;
+        padding: 20px;
+    }
+
+    .flex-list {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0;
+    }
+
+        .flex-list li {
+            background-color: orange;
+            flex: 0 0 auto;
+            list-style: none;
+            margin: 10px;
+            width: calc(33.33% - 20px);
+        }
+
+    /*  */
+
+    .grid-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 20px;
+        padding: 0;
+    }
+
+        .grid-list li {
+            background-color: lightgreen;
+            list-style: none;
+        }
+
+    .card1 {
+        grid-column: 1 / 3;
+    }
+
+    .card2 {
+        grid-column: 3;
+    }
+
+    .card3 {
+        grid-column: 1;
+        grid-row: 2 / 5;
+    }
+
+    .card4 {
+        grid-column: 2 / 4;
+    }
+
+    .card5 {
+        grid-column: 2 / 4;
+    }
+
+    .grid-list li:last-child {
+        grid-column: span 3t;
+        grid-row: 6;
+    }
+
+    /*  */
+
+    .grid-areas {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+            "a a b"
+            "c d d"
+            "c e e";
+        grid-gap: 20px;
+        padding: 0;
+    }
+
+        .grid-areas li {
+            background-color: lavender;
+            list-style: none;
+        }
+
+    .area1 {
+        grid-area: a;
+    }
+
+    .area2 {
+        grid-area: b;
+    }
+
+    .area3 {
+        grid-area: c;
+    }
+
+    .area4 {
+        grid-area: d;
+    }
+
+    .area5 {
+        grid-area: e;
+    }
+
+    /*  */
+
+    .grid-alignment {
+        align-items: start;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 150px);
+        grid-template-areas:
+            "a a a b"
+            "a a a b"
+            "c d d d";
+        grid-gap: 20px;
+        list-style: none;
+        padding: 0;
+        justify-items: end;
+    }
+
+        .grid-alignment li {
+            background-color: lavender;
+        }
+
+    .ga1 {
+        grid-area: a;
+    }
+
+    .ga2 {
+        align-self: stretch;
+        grid-area: b;
+    }
+
+    .ga3 {
+        align-self: end;
+        grid-area: c;
+    }
+
+    .ga4 {
+        align-self: center;
+        grid-area: d;
+        justify-self: stretch;
+    }
+
+    .flexspace {
+        background-color: orange;
+        display: flex;
+        padding: 20px;
+        justify-content: space-evenly;
+    }
+
+    .flexspace-item {
+        background-color: white;
+        box-sizing: border-box;
+        flex: 0 0 33.33%;
+        max-width: 400px;
+        padding: 10px;
+    }
+
+    /*  */
+
+    .gridiron {
+        align-content: space-between;
+        background-color: lightgreen;
+        display: grid;
+        grid-template-columns: repeat(4, 15%);
+        grid-template-rows: repeat(4, 100px);
+        grid-template-areas:
+            "a a a b"
+            "a a a b"
+            "c d d d"
+            "c d d d";
+        grid-gap: 20px;
+        height: 70vh;
+        justify-content: space-between;
+    }
+
+        .gridiron > div {
+            background-color: blue;
+            color: white;
+        }
+
+    .gridiron-item-1 {
+        grid-area: a;
+    }
+
+    .gridiron-item-2 {
+        grid-area: b;
+    }
+
+    .gridiron-item-3 {
+        grid-area: c;
+    }
+
+    .gridiron-item-4 {
+        grid-area: d;
+    }
+
+    .resp1 {
+        background-color: orange;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-gap: 20px;
+    }
+
+        .resp1 > div {
+            background-color: lightgreen;
+            padding: 10px;
+        }
+
+    /*  */
+
+    .resp2 {
+        background-color: purple;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-gap: 20px;
+    }
+
+        .resp2 > div {
+            background-color: black;
+            color: white;
+            padding: 10px;
+        }
+
+    /*  */
+
+    .flexin1 {
+        background-color: lightblue;
+        display: flex;
+        padding: 20px;
+    }
+
+        .flexin1 > div {
+            background-color: lavender;
+            flex: 1 1 auto;
+            margin: 10px;
+        }
+
+            .flexin1 > div:nth-child(4) {
+                background-color: green;
+                width: 400px;
+            }
+
+    /*  */
+
+    .layout1 {
+        display: grid;
+        grid-template-columns: 150px 1fr 150px;
+        grid-gap: 20px;
+        padding: 20px;
+    }
+
+        .layout1 > div {
+            background-color: lavender;
+            padding: 10px 20px;
+        }
+
+    .layout1-content {
+        grid-column: 2;
+    }
+
+    .layout1-aside1 {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .layout1-aside2 {
+        grid-column: 3;
+        grid-row: 1;
+    }
+
+    /*  */
+
+    .gridauto1 {
+        background-color: lightblue;
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: 1fr auto 1fr;
+        padding: 20px;
+    }
+
+        .gridauto1 > div {
+            background-color: white;
+        }
+
+            .gridauto1 > div:nth-child(2) {
+                background-color: orange;
+                width: 300px;
+            }
+
+            .gridauto1 > div:nth-child(4) {
+                background-color: green;
+                height: 400px;
+            }
+
+    /*  */
+
+    .gridauto2 {
+        background-color: lightpink;
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-auto-rows: minmax(150px, auto);
+        padding: 20px;
+    }
+
+        .gridauto2 > div {
+            background-color: white;
+            padding: 10px 20px;
+        }
+
+            .gridauto2 > div:first-child {
+                background-color: silver;
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .gridauto2 > div:nth-child(2) {
+                background-color: purple;
+                grid-column: 2 / 4;
+                grid-row: 1 / 3;
+            }
+
+    /*  */
+
+    .flex-order1 {
+        background-color: black;
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 10px;
+    }
+
+        .flex-order1 > div {
+            background-color: red;
+            color: black;
+            margin: 5px;
+            padding: 10px 20px;
+        }
+
+    /*  */
+
+    .grid-auto1 {
+        background-color: red;
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-rows: repeat(3, minmax(150px, 1fr));
+        grid-gap: 20px;
+        padding: 10px;
+    }
+
+    button {
+        font-family: 'Muli', sans-serif;
+        -webkit-transition: 0.15s all ease-in-out;
+        -o-transition: 0.15s all ease-in-out;
+        transition: 0.15s all ease-in-out;
+        cursor: pointer;
+    }
+
+    .all {
+        padding: 30px 0;
+        margin: 0 auto;
+        width: 90%;
+        height: auto;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+    .grid-auto1 > div {
+        background-color: black;
+        color: red;
+        padding: 10px 20px;
+    }
+
+    /*  */
+
+    .grid-auto2 {
+        background-color: silver;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-auto-flow: dense;
+        grid-gap: 20px;
+        padding: 10px;
+    }
+
+        .grid-auto2 > div {
+            background-color: #353535;
+            color: #f2f2f2;
+            padding: 10px 20px;
+        }
+
+        .grid-auto2 > .landscape {
+            grid-column: auto / span 2;
+        }
+
+        .grid-auto2 div:first-child {
+            background-color: red;
+            order: 1;
+        }
+
+    /*  */
+
+    .display-contents1 {
+        display: grid;
+        grid-gap: 20px 10px;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
+        .display-contents1 > *,
+        .display-contents1 li {
+            background-color: orange;
+            padding: 10px;
+        }
+
+        .display-contents1 ul {
+            display: contents;
+            list-style: none;
+            margin: 0;
+        }
+
+    /*  */
+
+    .hopeful-grid-layout {
+        background-color: orange;
+        display: flex;
+        padding: 40px;
+    }
+
+    }
+</style>
+
+<!-- <table>
+     //     <tr>
+      //      <th>First Name</th>
+     //       <th>Last Name</th>
+    //        <th>Email</th>
+    //        <th>Phone</th>
+    //       </tr>
+    //
+    /  @foreach (ProfessorRow row in (IEnumerable<ProfessorRow>)ViewData["Row"])
+    //    {
+    //        <tr>
+    //            <td>@row.fname</td>
+    //            <td>@row.lname</td>
+    //            <td>@row.email</td>
+    //            <td>@row.phone</td>
+    //        </tr>
+       //}
+
+
+      // </table> 
+
+//</div>-->
+
+ 
