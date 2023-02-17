@@ -4,114 +4,144 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
  
 
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>W3.CSS Template</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            html, body, h1, h2, h3, h4 {
+                font-family: "Lato", sans-serif
+            }
 
+            .mySlides {
+                display: none
+            }
 
+            .w3-tag, .fa {
+                cursor: pointer
+            }
 
-    <p>
-        Typing out examples as I read through the book to help me internalize what I'm reading.
-    </p>
+            .w3-tag {
+                height: 15px;
+                width: 15px;
+                padding: 0;
+                margin-top: 6px
+            }
+        </style>
+    </head>
+    <body>
 
-    <div class="wrapper">
+        <!-- Links (sit on top) -->
+        <table>
+            <tr> <a href="#" class="w3-button w3-block">Home</a></tr>
 
+            <tr>
+                <div class="w3-col s3">
 
-        <ul>
-            <li>
-                <a href="/ProfessorRows" class="button">
-                    Professers
-                </a>
+                    <a href="/StudentRows/" class="w3-button w3-block">Students</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+
+                    <a href="/StudentRows/create" class="w3-button w3-block">Add Students</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+                    <a href="/ProfessorRows" class="w3-button w3-block">Professors</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+                    <a href="/ProfessorRows" class="w3-button w3-block">Add Professors</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+                    <a href=" /Users/logout" class="w3-button w3-block">logout</a>
+                </div>
+                
+            </tr>
+        </table>
+
+        <div class="container">
+            <div class="box">
                 <p>
-                </p>
-            </li>
-            <li>
-
-                <p>
-                    <a href="/StudentRows/" class="button"> Students </a>
-                </p>
-            </li>
-            <li>
-
-                <a href="/ProfessorRows/Create" class="button">
-                    Add Professors
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <hr />
-
-    <div class="container">
-        <div class="box">
-            <p>
-                <table>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Course</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Address</th>
-                    </tr>
-
-                    @foreach (StudentRow row in (IEnumerable<StudentRow>)ViewData["Row"])
-                    {
+                    <table>
                         <tr>
-                            <td>@row.fname</td>
-                            <td>@row.lname</td>
-                            <td>@row.courseTitle</td>
-                            <td>@row.email</td>
-                            <td>@row.phone</td>
-                            <td>@row.address</td>
+                            <th>id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Course</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
                         </tr>
-                    }
+
+                        @foreach (StudentRow row in (IEnumerable<StudentRow>)ViewData["Row"])
+                        {
+                            <tr>
+                                 <td>@row.Id</td>
+                                <td>@row.fname</td>
+                                <td>@row.lname</td>
+                                <td>@row.courseTitle</td>
+                                <td>@row.email</td>
+                                <td>@row.phone</td>
+                                <td>@row.address</td>
+                            </tr>
+                        }
 
 
-                </table>
+                    </table>
 
-            </p>
+                </p>
+            </div>
         </div>
-    </div>
+        <script>
+            // Slideshow
+            var slideIndex = 1;
+            showDivs(slideIndex);
 
- 
-    <hr />
+            function plusDivs(n) {
+                showDivs(slideIndex += n);
+            }
+
+            function currentDiv(n) {
+                showDivs(slideIndex = n);
+            }
+
+            function showDivs(n) {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                var dots = document.getElementsByClassName("demodots");
+                if (n > x.length) { slideIndex = 1 }
+                if (n < 1) { slideIndex = x.length };
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" w3-white", "");
+                }
+                x[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " w3-white";
+            }
+        </script>
+
+    </body>
+</html>
 
 
-    <hr />
 
 
-    <hr />
-
-
-
-    <hr />
-
-
-
-    <hr />
-
-
-
-    <hr />
-
-
-    <hr />
-
-    <div class="hopeful-grid-layout">
-        Hello
-    </div>
-</div>
 <style>
     body {
         margin: 0;
@@ -602,27 +632,3 @@
     }
 </style>
 
-<!-- <table>
-     //     <tr>
-      //      <th>First Name</th>
-     //       <th>Last Name</th>
-    //        <th>Email</th>
-    //        <th>Phone</th>
-    //       </tr>
-    //
-    /  @foreach (ProfessorRow row in (IEnumerable<ProfessorRow>)ViewData["Row"])
-    //    {
-    //        <tr>
-    //            <td>@row.fname</td>
-    //            <td>@row.lname</td>
-    //            <td>@row.email</td>
-    //            <td>@row.phone</td>
-    //        </tr>
-       //}
-
-
-      // </table> 
-
-//</div>-->
-
- 

@@ -6,81 +6,145 @@
 }
 
 
-   
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
-    <a href="/ProfessorRows/create"> add Professor </a>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>W3.CSS Template</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            html, body, h1, h2, h3, h4 {
+                font-family: "Lato", sans-serif
+            }
 
-    <a href="/StudentRows"> students  </a>
-    <a href="/ProfessorRows"> professors  </a>
+            .mySlides {
+                display: none
+            }
+
+            .w3-tag, .fa {
+                cursor: pointer
+            }
+
+            .w3-tag {
+                height: 15px;
+                width: 15px;
+                padding: 0;
+                margin-top: 6px
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- Links (sit on top) -->
+        <table>
+            
+
+            <tr>
+                <div class="w3-col s3">
+
+                    <a href="/StudentRows/" class="w3-button w3-block">Students</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+
+                    <a href="/StudentRows/create" class="w3-button w3-block">Add Students</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+                    <a href="/ProfessorRows" class="w3-button w3-block">Professors</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+                    <a href="/ProfessorRows" class="w3-button w3-block">Add Professors</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+                    <a href=" /Users/logout" class="w3-button w3-block">logout</a>
+                </div>
+                <
+            </tr>
+        </table>
 
 
-    <h1>The New CSS Layout - Scratchpad</h1>
-    <p>
-        Typing out examples as I read through the book to help me internalize what I'm reading.
-    </p>
-
-    <div class="wrapper">
-
-
-        <ul>
-            <li>
-                <button href="/ProfessorRows/Index"> Professers </button>
-                <p>
-                </p>
-            </li>
-            <li>
-
-                <p>
-                    <button href="/StudentRows/Index"> Students </button>
-                </p>
-            </li>
-            <li>
-
-                <button href="/ProfessorRows/Create">
-                    Add Professors
-                </button>
-            </li>
-        </ul>
-    </div>
-
-    <hr />
-
-    <div class="container">
-        <div class="box">
-            <table>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-
-                    <th>Email</th>
-                    <th>Phone</th>
-
-                </tr>
-
-                @foreach (ProfessorRow row in (IEnumerable<ProfessorRow>)ViewData["Row"])
-                {
+        <div class="container">
+            <div class="box">
+                <table>
                     <tr>
-                        <td>@row.fname</td>
-                        <td>@row.lname</td>
+                        <th>id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
 
-                        <td>@row.email</td>
-                        <td>@row.phone</td>
+                        <th>Email</th>
+                        <th>Phone</th>
 
                     </tr>
-                }
+
+                    @foreach (ProfessorRow row in (IEnumerable<ProfessorRow>)ViewData["Row"])
+                    {
+                        <tr>
+                        
+                        <td>@row.Id</td>
+                            <td>@row.fname</td>
+                            <td>@row.lname</td>
+
+                            <td>@row.email</td>
+                            <td>@row.phone</td>
+
+                        </tr>
+                    }
 
 
-            </table>
+                </table>
 
 
 
+            </div>
         </div>
-    </div>
-      
-</div>
+
+        <script>
+            // Slideshow
+            var slideIndex = 1;
+            showDivs(slideIndex);
+
+            function plusDivs(n) {
+                showDivs(slideIndex += n);
+            }
+
+            function currentDiv(n) {
+                showDivs(slideIndex = n);
+            }
+
+            function showDivs(n) {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                var dots = document.getElementsByClassName("demodots");
+                if (n > x.length) { slideIndex = 1 }
+                if (n < 1) { slideIndex = x.length };
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" w3-white", "");
+                }
+                x[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " w3-white";
+            }
+        </script>
+
+    </body>
+</html>
+
+
+
+
 <style>
     body {
         margin: 0;
@@ -484,11 +548,35 @@
         padding: 10px;
     }
 
-        .grid-auto1 > div {
-            background-color: black;
-            color: red;
-            padding: 10px 20px;
-        }
+    button {
+        font-family: 'Muli', sans-serif;
+        -webkit-transition: 0.15s all ease-in-out;
+        -o-transition: 0.15s all ease-in-out;
+        transition: 0.15s all ease-in-out;
+        cursor: pointer;
+    }
+
+    .all {
+        padding: 30px 0;
+        margin: 0 auto;
+        width: 90%;
+        height: auto;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+    .grid-auto1 > div {
+        background-color: black;
+        color: red;
+        padding: 10px 20px;
+    }
 
     /*  */
 
@@ -547,11 +635,3 @@
     }
 </style>
 
-<!-- <table>
- //     <tr>
-  //      <th>First Name</th>
- //       <th>Last Name</th>
-//        <th>Email</th>
-//        <th>Phone</th>
-//       </tr>
-//
