@@ -74,7 +74,7 @@ namespace Finally_project.Controllers
             {
                 lname = row["lname"].ToString(),
                 fname = row["fname"].ToString(),
-           
+                Id = int.Parse(row["id"].ToString()),
                 email = row["email"].ToString(),
                 phone = row["phone"].ToString()
             };
@@ -112,7 +112,7 @@ namespace Finally_project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,phone,email,fname,lname")] ProfessorRow professorRow)
+        public async Task<IActionResult> Create([Bind("id,phone,email,fname,lname")] ProfessorRow professorRow)
         {
             //get Users session variable from sessions storage
             string? usersSession = HttpContext.Session.GetString("UserIsLoggedIn");

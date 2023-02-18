@@ -11,21 +11,19 @@ using System.Data;
 
 namespace Finally_project.Controllers
 {
-    public class StudentRowsController : Controller
+    public class student_courseController : Controller
     {
         private readonly Finally_projectContext _context;
+        private List<student_course> dataRows;
 
-        public List<StudentRow> dataRows { get; set; }
-
-        public StudentRowsController(Finally_projectContext context)
+        public student_courseController(Finally_projectContext context)
         {
             _context = context;
         }
 
-        // GET: StudentRows
+        // GET: student_course
         public async Task<IActionResult> Index()
-        {
-            //get Users session variable from sessions storage
+        { //get Users session variable from sessions storage
             string? usersSession = HttpContext.Session.GetString("UserIsLoggedIn");
 
 
@@ -33,19 +31,15 @@ namespace Finally_project.Controllers
             if (!String.IsNullOrEmpty(usersSession))
             {
                 //_logger = logger;
-                dataRows = new List<StudentRow>();
+                dataRows = new List<student_course>();
 
                 var dataAccessLayer = new SqlDataAccess();
-                var datatable = dataAccessLayer.Execute("SELECT [fname],  [Student].[id] as id  " +
-                    " ,[lname]   ,[phone]  ,[email] " +
-                    ",Course.title ,[address]  FROM  [Course] ," +
-                    " [Student] Where [course].id = [Student].course$id");
+                var datatable = dataAccessLayer.Execute("[dbo].[Students_Course]");
 
 
                 foreach (DataRow item in datatable.Rows)
                 {
                     dataRows.Add(prepareData(item));
-
                 }
 
                 ViewData["Row"] = dataRows;
@@ -64,106 +58,88 @@ namespace Finally_project.Controllers
 
 
 
-        public StudentRow prepareData(DataRow row)
+        public student_course prepareData(DataRow row)
         {
 
 
-            var studentRow = new StudentRow()
+            var studentcourse = new student_course()
             {
                 Id = int.Parse(row["id"].ToString()),
                 lname = row["lname"].ToString(),
                 fname = row["fname"].ToString(),
-                courseTitle = row["title"].ToString(),
-                address = row["address"].ToString(),
-                email = row["email"].ToString(),
-                phone = row["phone"].ToString()
+                courseTitle = row["Course_title"].ToString(),
+                ModuleTitle = row["Module_title"].ToString(),
+                grade = row["grade"].ToString() 
             };
 
-            return studentRow;
+            return studentcourse;
 
         }
 
-
-        // GET: StudentRows/Details/5
+        // GET: student_course/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.StudentRow == null)
+            if (id == null || _context.student_course == null)
             {
                 return NotFound();
             }
 
-            var studentRow = await _context.StudentRow
+            var student_course = await _context.student_course
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (studentRow == null)
+            if (student_course == null)
             {
                 return NotFound();
             }
 
-            return View(studentRow);
+            return View(student_course);
         }
 
-        // GET: StudentRows/Create
+        // GET: student_course/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: StudentRows/Create
+        // POST: student_course/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,phone,address,email,courseTitle,fname,lname")] StudentRow studentRow)
+        public async Task<IActionResult> Create([Bind("Id,grade,ModuleTitle,courseTitle,fname,lname")] student_course student_course)
         {
             if (ModelState.IsValid)
             {
-
-                var datalayer = new SqlDataAccess();
-
-                var sql = prepareDataForInsert(studentRow);
-
-                var response = datalayer.ExecuteNonQuery(sql);
-
-
-
+                _context.Add(student_course);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(studentRow);
+            return View(student_course);
         }
 
-        public string prepareDataForInsert(StudentRow studentRow)
-        {
-            string sqlQuery = $@"INSERT INTO [dbo].[Student] ( [fname],[lname] ,[email] ,[phone] ,[address] ,[course$id])  VALUES  " +
-                $@"  ( '{studentRow.fname}' ,'{studentRow.lname}' , ' {studentRow.email}' ,'{studentRow.phone}','{studentRow.address}' ,'{studentRow.courseTitle}') ";
-
-            return sqlQuery;
-
-        }
-
-        // GET: StudentRows/Edit/5
+        // GET: student_course/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.StudentRow == null)
+            if (id == null || _context.student_course == null)
             {
                 return NotFound();
             }
 
-            var studentRow = await _context.StudentRow.FindAsync(id);
-            if (studentRow == null)
+            var student_course = await _context.student_course.FindAsync(id);
+            if (student_course == null)
             {
                 return NotFound();
             }
-            return View(studentRow);
+            return View(student_course);
         }
 
-        // POST: StudentRows/Edit/5
+        // POST: student_course/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,phone,address,email,courseTitle,fname,lname")] StudentRow studentRow)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,grade,ModuleTitle,courseTitle,fname,lname")] student_course student_course)
         {
-            if (id != studentRow.Id)
+            if (id != student_course.Id)
             {
                 return NotFound();
             }
@@ -172,12 +148,12 @@ namespace Finally_project.Controllers
             {
                 try
                 {
-                    _context.Update(studentRow);
+                    _context.Update(student_course);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentRowExists(studentRow.Id))
+                    if (!student_courseExists(student_course.Id))
                     {
                         return NotFound();
                     }
@@ -188,49 +164,49 @@ namespace Finally_project.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(studentRow);
+            return View(student_course);
         }
 
-        // GET: StudentRows/Delete/5
+        // GET: student_course/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.StudentRow == null)
+            if (id == null || _context.student_course == null)
             {
                 return NotFound();
             }
 
-            var studentRow = await _context.StudentRow
+            var student_course = await _context.student_course
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (studentRow == null)
+            if (student_course == null)
             {
                 return NotFound();
             }
 
-            return View(studentRow);
+            return View(student_course);
         }
 
-        // POST: StudentRows/Delete/5
+        // POST: student_course/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.StudentRow == null)
+            if (_context.student_course == null)
             {
-                return Problem("Entity set 'Finally_projectContext.StudentRow'  is null.");
+                return Problem("Entity set 'Finally_projectContext.student_course'  is null.");
             }
-            var studentRow = await _context.StudentRow.FindAsync(id);
-            if (studentRow != null)
+            var student_course = await _context.student_course.FindAsync(id);
+            if (student_course != null)
             {
-                _context.StudentRow.Remove(studentRow);
+                _context.student_course.Remove(student_course);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentRowExists(int id)
+        private bool student_courseExists(int id)
         {
-            return (_context.StudentRow?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.student_course?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

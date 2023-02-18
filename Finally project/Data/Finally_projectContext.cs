@@ -19,5 +19,7 @@ namespace Finally_project.Data
         public DbSet<Finally_project.Models.StudentRow> StudentRow { get; set; } = default!;
 
         public DbSet<Finally_project.Models.User> User { get; set; } = default!;
+
+        public DbSet<Finally_project.Models.student_course> student_course { get; set; } = default!;
     }
 }

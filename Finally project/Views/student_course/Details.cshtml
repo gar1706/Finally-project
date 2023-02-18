@@ -1,35 +1,39 @@
-﻿@model Finally_project.Models.ProfessorRow
+﻿@model Finally_project.Models.student_course
 
 @{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Home/professors.cshtml";
+    Layout = null;
 }
 
-<h1>Details</h1>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
 
 <div>
-    <h4>ProfessorRow</h4>
+    <h4>student_course</h4>
     <hr />
     <dl class="row">
-
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.phone)
+            @Html.DisplayNameFor(model => model.grade)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.phone)
+            @Html.DisplayFor(model => model.grade)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.email)
+            @Html.DisplayNameFor(model => model.ModuleTitle)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.email)
+            @Html.DisplayFor(model => model.ModuleTitle)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.courseTitle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.courseTitle)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.fname)
@@ -49,3 +53,5 @@
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+</body>
+</html>
