@@ -84,6 +84,14 @@ namespace Finally_project.Controllers
         }
 
 
+
+        //method to redirect to home
+        public IActionResult Home()
+        {
+            return RedirectToAction("index", "StudentRows");
+        }
+
+
         // GET: StudentRows/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -140,19 +148,56 @@ namespace Finally_project.Controllers
 
         }
 
+        public string prepareDataForUPdate(ProfessorRow professorRow)
+        {
+            string sqlQuery = $@"UPDATE [dbo].[Professor]
+                    SET  [fname]= '{professorRow.fname}'
+                        ,[lname] ='{professorRow.lname}'
+                        ,[email] = '{professorRow.email}'
+                        ,[phone] = '{professorRow.phone}'
+                    Where id = {professorRow.Id}";
+
+            return sqlQuery;
+
+        }
+
+        public string getRowData(int id)
+        {
+            string sqlQuery = $@"Select * From [dbo].[Student] Where id='{id}' ";
+
+            return sqlQuery;
+
+        }
         // GET: StudentRows/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.StudentRow == null)
+
+            var dataAccessLayer = new SqlDataAccess();
+            var datatable = dataAccessLayer.Execute(this.getRowData(int.Parse(id.ToString())));
+            StudentRow studentRow = new StudentRow();
+
+            foreach (DataRow item in datatable.Rows)
+            {
+
+               studentRow =   prepareData(item);
+                ViewData["Row"] = studentRow;
+
+            }
+
+
+
+            if (id == null || _context.ProfessorRow == null)
             {
                 return NotFound();
             }
 
-            var studentRow = await _context.StudentRow.FindAsync(id);
+            
             if (studentRow == null)
             {
                 return NotFound();
             }
+
+
             return View(studentRow);
         }
 

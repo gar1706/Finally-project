@@ -1,7 +1,9 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-    //ViewData["Row"] = Model.listofNames;
+﻿@model IEnumerable<Finally_project.Models.Professors_hours>
+
+@{
+    Layout = null;
 }
+
 
 
 <!DOCTYPE html>
@@ -32,15 +34,13 @@
             padding: 0;
             margin-top: 6px
         }
-    </style> 
+    </style>
 </head>
 <body>
-    <div> <img src="./logo.jpg" alt="logo" class="logo" /></div>
 
     <!-- Links (sit on top) -->
     <table>
-        
-  
+        <tr> <a href="#" class="w3-button w3-block">Home</a></tr>
 
         <tr>
             <div class="w3-col s3">
@@ -59,31 +59,61 @@
                 <a href="/ProfessorRows" class="w3-button w3-block">Professors</a>
             </div>
         </tr>
-         <tr>
-           <div class="w3-col s3">
+        <tr>
+            <div class="w3-col s3">
                 <a href="/ProfessorRows/create" class="w3-button w3-block">Add Professors</a>
-           </div>
-        </tr>
-        <tr>
-            <div class="w3-col s3">
-                <a href="/student_course" class="w3-button w3-block">Student_course</a>
             </div>
         </tr>
         <tr>
             <div class="w3-col s3">
-                <a href="/Professors_Hours" class="w3-button w3-block">Professors_Hours</a>
+                <a href="/Professor_hours" class="w3-button w3-block">Professor Hours</a>
             </div>
         </tr>
-
         <tr>
             <div class="w3-col s3">
                 <a href=" /Users/logout" class="w3-button w3-block">logout</a>
             </div>
-            
+
         </tr>
     </table>
 
+    <div class="container">
+        <div class="box">
+            <p>
+                <table>
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Course</th>
+                        <th>ModuleTitle</th>
+                        <th>Hours</th>
+                    </tr>
 
+                    @foreach (Professors_hours row in (IEnumerable<Professors_hours>)ViewData["Row"])
+                    {
+                        <tr>
+                            <td>@row.Id</td>
+                            <td>@row.fname</td>
+                            <td>@row.lname</td>
+                            <td>@row.courseTitle</td>
+                            <td>@row.ModuleTitle</td>
+                            <td>@row.hours</td>
+
+                        </tr>
+                    }
+
+
+                </table>
+              
+            </p>
+        </div>
+        <div class ="links">
+
+            <a href="/home" class="w3-button w3-block">Back to home</a>
+        </div>
+   
+        </div>
     <script>
         // Slideshow
         var slideIndex = 1;
@@ -121,13 +151,6 @@
 
 
 <style>
-
-    .logo{
-        float: right;
-      
-        width: 130px;
-    }
-
     body {
         margin: 0;
         background: #00800040;
@@ -617,26 +640,3 @@
 
     }
 </style>
-
-<!-- <table>
-     //     <tr>
-      //      <th>First Name</th>
-     //       <th>Last Name</th>
-    //        <th>Email</th>
-    //        <th>Phone</th>
-    //       </tr>
-    //
-    /  @foreach (ProfessorRow row in (IEnumerable<ProfessorRow>)ViewData["Row"])
-    //    {
-    //        <tr>
-    //            <td>@row.fname</td>
-    //            <td>@row.lname</td>
-    //            <td>@row.email</td>
-    //            <td>@row.phone</td>
-    //        </tr>
-       //}
-
-
-      // </table> 
-
-//</div>-->

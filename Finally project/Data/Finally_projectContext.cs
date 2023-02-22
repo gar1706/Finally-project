@@ -21,5 +21,7 @@ namespace Finally_project.Data
         public DbSet<Finally_project.Models.User> User { get; set; } = default!;
 
         public DbSet<Finally_project.Models.student_course> student_course { get; set; } = default!;
+
+        public DbSet<Finally_project.Models.Professors_hours> Professors_hours { get; set; } = default!;
     }
 }

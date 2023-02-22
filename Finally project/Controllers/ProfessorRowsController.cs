@@ -83,6 +83,12 @@ namespace Finally_project.Controllers
 
         }
 
+        //method to redirect to home
+        public IActionResult Home()
+        {
+            return RedirectToAction("index", "ProfessorRows");
+        }
+
         // GET: ProfessorRows/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -157,19 +163,55 @@ namespace Finally_project.Controllers
         
         }
 
-        // GET: ProfessorRows/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public string prepareDataForUPdate(ProfessorRow professorRow)
         {
-            if (id == null || _context.ProfessorRow == null)
+            string sqlQuery = $@"UPDATE [dbo].[Professor]
+                    SET  [fname]= '{professorRow.fname}'
+                        ,[lname] ='{professorRow.lname}'
+                        ,[email] = '{professorRow.email}'
+                        ,[phone] = '{professorRow.phone}'
+                    Where id = {professorRow.Id}"; 
+
+            return sqlQuery;
+
+        }
+
+        public string getRowData(int id)
+        {
+            string sqlQuery = $@"Select * From [dbo].[Professor] Where id='{id}' ";
+
+            return sqlQuery;
+
+        }
+
+        // GET: ProfessorRows/Edit/5
+        public async Task<IActionResult> Edit(ProfessorRow? row)
+        {
+
+            var dataAccessLayer = new SqlDataAccess();
+            var datatable = dataAccessLayer.Execute(this.getRowData(row.Id));
+           
+
+            foreach (DataRow item in datatable.Rows)
+            {
+                
+                ViewData["Row"] = prepareData(item);
+            }
+
+           
+
+            if (row == null || _context.ProfessorRow == null)
             {
                 return NotFound();
             }
 
-            var professorRow = await _context.ProfessorRow.FindAsync(id);
+            var professorRow =row;
             if (professorRow == null)
             {
                 return NotFound();
             }
+
+
             return View(professorRow);
         }
 
@@ -180,30 +222,38 @@ namespace Finally_project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,phone,email,fname,lname")] ProfessorRow professorRow)
         {
-            if (id != professorRow.Id)
-            {
-                return NotFound();
-            }
+            //get Users session variable from sessions storage
+            string? usersSession = HttpContext.Session.GetString("UserIsLoggedIn");
 
-            if (ModelState.IsValid)
+
+
+            //if users are logged in , then execute code
+            if (!String.IsNullOrEmpty(usersSession))
             {
-                try
+                if (ModelState.IsValid)
                 {
-                    _context.Update(professorRow);
-                    await _context.SaveChangesAsync();
+
+
+                    var datalayer = new SqlDataAccess();
+
+                    var sql = prepareDataForUPdate(professorRow);
+
+                    var response = datalayer.ExecuteNonQuery(sql);
+
+
+
+                    return RedirectToAction(nameof(Index));
+
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProfessorRowExists(professorRow.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View(professorRow);
+            }
+            else
+            {
+
+                //if the users are not logged in redirect to log in page
+
+                return RedirectToAction("index", "Users");
+
             }
             return View(professorRow);
         }

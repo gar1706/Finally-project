@@ -4,139 +4,142 @@
     Layout = null;
 }
 
- 
 
 
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>W3.CSS Template</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <style>
-            html, body, h1, h2, h3, h4 {
-                font-family: "Lato", sans-serif
-            }
 
-            .mySlides {
-                display: none
-            }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>W3.CSS Template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        html, body, h1, h2, h3, h4 {
+            font-family: "Lato", sans-serif
+        }
 
-            .w3-tag, .fa {
-                cursor: pointer
-            }
+        .mySlides {
+            display: none
+        }
 
-            .w3-tag {
-                height: 15px;
-                width: 15px;
-                padding: 0;
-                margin-top: 6px
-            }
-        </style>
-    </head>
-    <body>
+        .w3-tag, .fa {
+            cursor: pointer
+        }
 
-        <!-- Links (sit on top) -->
-        <table>
-            <tr> <a href="#" class="w3-button w3-block">Home</a></tr>
+        .w3-tag {
+            height: 15px;
+            width: 15px;
+            padding: 0;
+            margin-top: 6px
+        }
+    </style>
+</head>
+<body>
 
-            <tr>
-                <div class="w3-col s3">
+    <!-- Links (sit on top) -->
+    <table>
+        <tr> <a href="#" class="w3-button w3-block">Home</a></tr>
 
-                    <a href="/StudentRows/" class="w3-button w3-block">Students</a>
-                </div>
-            </tr>
-            <tr>
-                <div class="w3-col s3">
+        <tr>
+            <div class="w3-col s3">
 
-                    <a href="/StudentRows/create" class="w3-button w3-block">Add Students</a>
-                </div>
-            </tr>
-            <tr>
-                <div class="w3-col s3">
-                    <a href="/ProfessorRows" class="w3-button w3-block">Professors</a>
-                </div>
-            </tr>
-            <tr>
-                <div class="w3-col s3">
-                    <a href="/ProfessorRows/create" class="w3-button w3-block">Add Professors</a>
-                </div>
-            </tr>
-            <tr>
-                <div class="w3-col s3">
-                    <a href=" /Users/logout" class="w3-button w3-block">logout</a>
-                </div>
-                
-            </tr>
-        </table>
-
-        <div class="container">
-            <div class="box">
-                <p>
-                    <table>
-                        <tr>
-                            <th>Id</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Course</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Address</th>
-                        </tr>
-
-                        @foreach (StudentRow row in (IEnumerable<StudentRow>)ViewData["Row"])
-                        {
-                            <tr>
-                                <td>@row.Id</td>
-                                <td>@row.fname</td>
-                                <td>@row.lname</td>
-                                <td>@row.courseTitle</td>
-                                <td>@row.email</td>
-                                <td>@row.phone</td>
-                                <td>@row.address</td>
-                            </tr>
-                        }
-
-
-                    </table>
-
-                </p>
+                <a href="/StudentRows/" class="w3-button w3-block">Students</a>
             </div>
+        </tr>
+        <tr>
+            <div class="w3-col s3">
+
+                <a href="/StudentRows/create" class="w3-button w3-block">Add Students</a>
+            </div>
+        </tr>
+        <tr>
+            <div class="w3-col s3">
+                <a href="/ProfessorRows" class="w3-button w3-block">Professors</a>
+            </div>
+        </tr>
+        <tr>
+            <div class="w3-col s3">
+                <a href="/ProfessorRows/create" class="w3-button w3-block">Add Professors</a>
+            </div>
+        </tr>
+        <tr>
+            <div class="w3-col s3">
+                <a href=" /Users/logout" class="w3-button w3-block">logout</a>
+            </div>
+
+        </tr>
+    </table>
+
+    <div class="container">
+        <div class="box">
+            <p>
+                <table>
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Course</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                    </tr>
+
+                    @foreach (StudentRow row in (IEnumerable<StudentRow>)ViewData["Row"])
+                    {
+                        <tr>
+                            <td>@row.Id</td>
+                            <td>@row.fname</td>
+                            <td>@row.lname</td>
+                            <td>@row.courseTitle</td>
+                            <td>@row.email</td>
+                            <td>@row.phone</td>
+                            <td>@row.address</td>
+                        </tr>
+                    }
+
+
+                </table>
+                <div class="links">
+
+                    <a href="/home" class="w3-button w3-block">Back to home</a>
+                </div>
+            </p>
         </div>
-        <script>
-            // Slideshow
-            var slideIndex = 1;
-            showDivs(slideIndex);
+    </div>
+    <script>
+        // Slideshow
+        var slideIndex = 1;
+        showDivs(slideIndex);
 
-            function plusDivs(n) {
-                showDivs(slideIndex += n);
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function currentDiv(n) {
+            showDivs(slideIndex = n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demodots");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length };
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
             }
-
-            function currentDiv(n) {
-                showDivs(slideIndex = n);
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" w3-white", "");
             }
+            x[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " w3-white";
+        }
+    </script>
 
-            function showDivs(n) {
-                var i;
-                var x = document.getElementsByClassName("mySlides");
-                var dots = document.getElementsByClassName("demodots");
-                if (n > x.length) { slideIndex = 1 }
-                if (n < 1) { slideIndex = x.length };
-                for (i = 0; i < x.length; i++) {
-                    x[i].style.display = "none";
-                }
-                for (i = 0; i < dots.length; i++) {
-                    dots[i].className = dots[i].className.replace(" w3-white", "");
-                }
-                x[slideIndex - 1].style.display = "block";
-                dots[slideIndex - 1].className += " w3-white";
-            }
-        </script>
-
-    </body>
+</body>
 </html>
 
 
@@ -145,6 +148,7 @@
 <style>
     body {
         margin: 0;
+        background: #00800040;
     }
 
     hr {
