@@ -37,6 +37,9 @@ namespace Finally_project.Controllers
             }
         }
 
+        public void testMethod() { }
+
+
         public IActionResult Privacy()
         {
             return View();
