@@ -12,10 +12,10 @@ using System.Data;
 namespace Finally_project.Controllers
 {
     public class StudentRowsController : Controller
-    {
-        private readonly Finally_projectContext _context;
 
+    {
         public List<StudentRow> dataRows { get; set; }
+        private readonly Finally_projectContext _context;
 
         public StudentRowsController(Finally_projectContext context)
         {
@@ -38,7 +38,7 @@ namespace Finally_project.Controllers
                 var dataAccessLayer = new SqlDataAccess();
                 var datatable = dataAccessLayer.Execute("SELECT [fname],  [Student].[id] as id  " +
                     " ,[lname]   ,[phone]  ,[email] " +
-                    ",Course.title ,[address]  FROM  [Course] ," +
+                    ",Course.title as title ,[address]  FROM  [Course] ," +
                     " [Student] Where [course].id = [Student].course$id");
 
 
@@ -62,6 +62,34 @@ namespace Finally_project.Controllers
             }
         }
 
+        ////get Users session variable from sessions storage
+        //string? usersSession = HttpContext.Session.GetString("UserIsLoggedIn");
+
+        ////if users are logged in , then execute code
+        //    if (!String.IsNullOrEmpty(usersSession))
+        //    {
+        //        dataRows = new List<StudentRow>();
+
+        //    var dataAccessLayer = new SqlDataAccess();
+        //    var datatable = dataAccessLayer.Execute("SELECT  * FROM[Student]");
+
+
+        //foreach (DataRow item in datatable.Rows)
+        //        {
+        //            dataRows.Add(prepareData(item));
+        //        }
+        //          ViewData["Row"] = dataRows;
+        //            return View();
+        //        }
+        //    else {
+
+        //     //if the users are not logged in redirect to log in page
+
+        //      return RedirectToAction("index", "Users");
+        //     }
+
+        //    }
+
 
 
         public StudentRow prepareData(DataRow row)
@@ -82,6 +110,23 @@ namespace Finally_project.Controllers
             return studentRow;
 
         }
+        //         {
+        //    var Student = new StudentRow()
+        //    {
+        //        lname = row["lname"].ToString(),
+        //        fname = row["fname"].ToString(),
+        //        Id = int.Parse(row["id"].ToString()),
+        //        email = row["email"].ToString(),
+        //        phone = row["phone"].ToString(),
+        //        courseTitle= row["courseTitle"].ToString(),
+        //       /// course.id = row["course.id"].ToString(),
+        //        address = row["address"].ToString()
+        //    };
+
+        //    return Student;
+
+        //}
+
 
 
 
@@ -109,6 +154,23 @@ namespace Finally_project.Controllers
 
             return View(studentRow);
         }
+
+
+        //if (id == null || _context.StudentrRow == null)
+        //{
+        //   return NotFound();
+        //}
+
+        //var StudentRow = await _context.StudentRow
+        //   .FirstOrDefaultAsync(m => m.Id == id);
+        //if (StudentRow == null)
+        //{
+        //           return NotFound();
+        //}
+
+        //return View(StudentRow);
+        //}
+
 
         // GET: StudentRows/Create
         public IActionResult Create()
@@ -148,14 +210,15 @@ namespace Finally_project.Controllers
 
         }
 
-        public string prepareDataForUPdate(ProfessorRow professorRow)
+        public string prepareDataForUPdate(StudentRow studentRow)
         {
-            string sqlQuery = $@"UPDATE [dbo].[Professor]
-                    SET  [fname]= '{professorRow.fname}'
-                        ,[lname] ='{professorRow.lname}'
-                        ,[email] = '{professorRow.email}'
-                        ,[phone] = '{professorRow.phone}'
-                    Where id = {professorRow.Id}";
+            string sqlQuery = $@"UPDATE [dbo].[student]
+                    SET  [fname]= '{studentRow.fname}'
+                        ,[lname] ='{studentRow.lname}'
+                        ,[email] = '{studentRow.email}'
+                        ,[phone] = '{studentRow.phone}'
+                        ,[course$id] ='{studentRow.courseTitle}'
+                    Where id = {studentRow.Id}";
 
             return sqlQuery;
 
@@ -163,7 +226,11 @@ namespace Finally_project.Controllers
 
         public string getRowData(int id)
         {
-            string sqlQuery = $@"Select * From [dbo].[Student] Where id='{id}' ";
+            string sqlQuery = $@"SELECT [fname], [Student].[id] as id ,[lname]  ,[phone]  ,[email]   ,Student.course$id as title ,[address] 
+                    FROM  [Course] , [Student]
+                    Where [course].id = [Student].course$id AND  [Student].[id]='{id}'";
+
+             
 
             return sqlQuery;
 
@@ -179,7 +246,7 @@ namespace Finally_project.Controllers
             foreach (DataRow item in datatable.Rows)
             {
 
-               studentRow =   prepareData(item);
+                studentRow = prepareData(item);
                 ViewData["Row"] = studentRow;
 
             }
@@ -191,7 +258,7 @@ namespace Finally_project.Controllers
                 return NotFound();
             }
 
-            
+
             if (studentRow == null)
             {
                 return NotFound();
@@ -206,32 +273,40 @@ namespace Finally_project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,phone,address,email,courseTitle,fname,lname")] StudentRow studentRow)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,phone,address,email,courseTitle,fname,lname")] StudentRow studentRow)
         {
-            if (id != studentRow.Id)
-            {
-                return NotFound();
-            }
+            //get Users session variable from sessions storage
+            string? usersSession = HttpContext.Session.GetString("UserIsLoggedIn");
 
-            if (ModelState.IsValid)
+
+
+            //if users are logged in , then execute code
+            if (!String.IsNullOrEmpty(usersSession))
             {
-                try
+                if (ModelState.IsValid)
                 {
-                    _context.Update(studentRow);
-                    await _context.SaveChangesAsync();
+
+
+                    var datalayer = new SqlDataAccess();
+
+                    var sql = prepareDataForUPdate(studentRow);
+
+                    var response = datalayer.ExecuteNonQuery(sql);
+
+
+
+                    return RedirectToAction(nameof(Index));
+
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!StudentRowExists(studentRow.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return View(studentRow);
+            }
+            else
+            {
+
+                //if the users are not logged in redirect to log in page
+
+                return RedirectToAction("index", "Users");
+
             }
             return View(studentRow);
         }

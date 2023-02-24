@@ -1,7 +1,10 @@
 ﻿@model IEnumerable<Finally_project.Models.StudentRow>
 
 @{
-    Layout = null;
+    
+    ViewData["Title"] = "Index";
+ 
+
 }
 
 
@@ -39,9 +42,11 @@
 </head>
 <body>
 
+    <div class="navigationBar">
     <!-- Links (sit on top) -->
     <table>
-        <tr> <a href="#" class="w3-button w3-block">Home</a></tr>
+
+
 
         <tr>
             <div class="w3-col s3">
@@ -67,12 +72,23 @@
         </tr>
         <tr>
             <div class="w3-col s3">
+                <a href="/student_course" class="w3-button w3-block">Student_Course</a>
+            </div>
+        </tr>
+        <tr>
+            <div class="w3-col s3">
+                <a href="/Professors_Hours" class="w3-button w3-block">Professors_Hours</a>
+            </div>
+        </tr>
+
+        <tr>
+            <div class="w3-col s3">
                 <a href=" /Users/logout" class="w3-button w3-block">logout</a>
             </div>
 
         </tr>
     </table>
-
+    </div>
     <div class="container">
         <div class="box">
             <p>
@@ -89,7 +105,12 @@
 
                     @foreach (StudentRow row in (IEnumerable<StudentRow>)ViewData["Row"])
                     {
-                        <tr>
+                       <form asp-action="Edit" class="registartion-form">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                          <tr>
+
+                            <input type="hidden" name="id" value="@row" />
                             <td>@row.Id</td>
                             <td>@row.fname</td>
                             <td>@row.lname</td>
@@ -97,10 +118,12 @@
                             <td>@row.email</td>
                             <td>@row.phone</td>
                             <td>@row.address</td>
-                        </tr>
+
+                            <td>     @Html.ActionLink("Edit", "Edit", new { id=row.Id }) </td>
+                         </tr>
+                       </form>
                     }
-
-
+                    
                 </table>
                 <div class="links">
 
@@ -138,9 +161,7 @@
             dots[slideIndex - 1].className += " w3-white";
         }
     </script>
-
-</body>
-</html>
+ 
 
 
 
@@ -177,9 +198,19 @@
 
     /*----*/
 
+
+    .navigationBar {
+        position: FIXED;
+        top: 10%;
+        LEFT: 0%;
+        width: 100%;
+    }
+
     .container {
-        border: 1px solid blue;
-        display: flow-root;
+        position: absolute;
+        left: 14%;
+        top: 29%;
+        width: 64em;
     }
 
     .box {
@@ -636,3 +667,5 @@
     }
 </style>
 
+</body>
+</html>

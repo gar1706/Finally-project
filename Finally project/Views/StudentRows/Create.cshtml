@@ -1,126 +1,140 @@
 ﻿@model Finally_project.Models.StudentRow
 
 @{
-    Layout = null;
+   
 }
 
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>W3.CSS Template</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            html, body, h1, h2, h3, h4 {
+                font-family: "Lato", sans-serif
+            }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>W3.CSS Template</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        html, body, h1, h2, h3, h4 {
-            font-family: "Lato", sans-serif
-        }
+            .mySlides {
+                display: none
+            }
 
-        .mySlides {
-            display: none
-        }
+            .w3-tag, .fa {
+                cursor: pointer
+            }
 
-        .w3-tag, .fa {
-            cursor: pointer
-        }
+            .w3-tag {
+                height: 15px;
+                width: 15px;
+                padding: 0;
+                margin-top: 6px
+            }
+        </style>
+    </head>
+    <body>
 
-        .w3-tag {
-            height: 15px;
-            width: 15px;
-            padding: 0;
-            margin-top: 6px
-        }
-    </style>
-</head>
-<body>
+        <div class="navigationBar">
+            <!-- Links (sit on top) -->
+            <table>
 
-    <!-- Links (sit on top) -->
-    <table>
-        <tr> <a href="#" class="w3-button w3-block">Home</a></tr>
 
-        <tr>
-            <div class="w3-col s3">
 
-                <a href="/StudentRows/" class="w3-button w3-block">Students</a>
-            </div>
-        </tr>
-        <tr>
-            <div class="w3-col s3">
+                <tr>
+                    <div class="w3-col s3">
 
-                <a href="/StudentRows/create" class="w3-button w3-block">Add Students</a>
-            </div>
-        </tr>
-        <tr>
-            <div class="w3-col s3">
-                <a href="/ProfessorRows" class="w3-button w3-block">Professors</a>
-            </div>
-        </tr>
-        <tr>
-            <div class="w3-col s3">
-                <a href="/ProfessorRows/create" class="w3-button w3-block">Add Professors</a>
-            </div>
-        </tr>
-        <tr>
-            <div class="w3-col s3">
-                <a href=" /Users/logout" class="w3-button w3-block">logout</a>
-            </div>
+                        <a href="/StudentRows/" class="w3-button w3-block">Students</a>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="w3-col s3">
 
-        </tr>
-    </table>
-    
-    <div class="container">
-        <div class="box">
-            <div class="row">
-                <div class="col-md-4">
-                    <form asp-action="Create">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="phone" class="control-label"> Phone</label>
-                            <input asp-for="phone" class="form-control" />
-                            <span asp-validation-for="phone" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="address" class="control-label"> Address</label>
-                            <input asp-for="address" class="form-control" />
-                            <span asp-validation-for="address" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="email" class="control-label">Email</label>
-                            <input asp-for="email" class="form-control" />
-                            <span asp-validation-for="email" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="courseTitle" class="control-label">Course Title</label>
-                            <input asp-for="courseTitle" class="form-control" />
-                            <span asp-validation-for="courseTitle" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="fname" class="control-label"> First name</label>
-                            <input asp-for="fname" class="form-control" />
-                            <span asp-validation-for="fname" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="lname" class="control-label">Last Name</label>
-                            <input asp-for="lname" class="form-control" />
-                            <span asp-validation-for="lname" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
-                        </div>
-                    </form>
+                        <a href="/StudentRows/create" class="w3-button w3-block">Add Students</a>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="w3-col s3">
+                        <a href="/ProfessorRows" class="w3-button w3-block">Professors</a>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="w3-col s3">
+                        <a href="/ProfessorRows/create" class="w3-button w3-block">Add Professors</a>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="w3-col s3">
+                        <a href="/student_course" class="w3-button w3-block">Student_course</a>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="w3-col s3">
+                        <a href="/Professors_Hours" class="w3-button w3-block">Professors_Hours</a>
+                    </div>
+                </tr>
+
+                <tr>
+                    <div class="w3-col s3">
+                        <a href=" /Users/logout" class="w3-button w3-block">logout</a>
+                    </div>
+
+                </tr>
+            </table>
+        </div>
+        <div class="container">
+
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control form-Control-width" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
                 </div>
-            </div>
+                <div class="form-group ">
+                    <label asp-for="courseTitle" class="control-label">couse$id</label>
+                    <input asp-for="courseTitle" class="form-control form-Control-width" />
+                    <span asp-validation-for="courseTitle" class="text-danger"></span>
+                </div>
+
+                <div class="form-group ">
+                    <label asp-for="address" class="control-label"></label>
+                    <input asp-for="address" class="form-control  form-Control-width" />
+                    <span asp-validation-for="address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="phone" class="control-label"></label> <!--this is where you can change the display-->
+                    <input asp-for="phone" class="form-control form-Control-width" />
+                    <span asp-validation-for="phone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="email" class="control-label"></label>
+                    <input asp-for="email" class="form-control form-Control-width" />
+                    <span asp-validation-for="email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="fname" class="control-label"></label>
+                    <input asp-for="fname" class="form-control form-Control-width" />
+                    <span asp-validation-for="fname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="lname" class="control-label"></label>
+                    <input asp-for="lname" class="form-control form-Control-width" />
+                    <span asp-validation-for="lname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
 
             <div>
-                <a asp-action="Index">Back to List</a>
+                <a asp-action="Home">Back to Home</a>
             </div>
 
-
         </div>
-    </div>
+  
     <script>
         // Slideshow
         var slideIndex = 1;
@@ -157,7 +171,14 @@
 
 
 
+
 <style>
+
+    .logo {
+        float: right;
+        width: 150px;
+    }
+
     body {
         margin: 0;
         background: #00800040;
@@ -189,17 +210,22 @@
 
     /*----*/
 
-    .container {
-        position: absolute;
-        top: 30vh;
-        left: 34%;
-        height: 277px;
-        width: 206px;
+    .navigationBar {
+        position: FIXED;
+        top: 10%;
+        LEFT: 0%;
+        width: 100%;
     }
 
-    .box {
-        border: 1px solid purple;
-        float: left;
+    .container {
+        position: absolute;
+        left: 14%;
+        top: 29%;
+        width: 64em;
+    }
+
+    .form-Control-width {
+        width: 34%;
     }
 
     /*---*/

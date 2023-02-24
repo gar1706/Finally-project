@@ -37,8 +37,8 @@
     </style>
 </head>
 <body>
- 
 
+    <div class="navigationBar">
     <!-- Links (sit on top) -->
     <table>
 
@@ -84,6 +84,7 @@
 
         </tr>
     </table>
+   </div>
     <div class="container">
     
          <form asp-action="Create">
@@ -91,28 +92,28 @@
 
             <div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
+                <input asp-for="Id" class="form-control form-Control-width" />
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="phone" class="control-label"></label>
-                <input asp-for="phone" class="form-control" />
+                <input asp-for="phone" class="form-control form-Control-width" />
                 <span asp-validation-for="phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="email" class="control-label"></label>
-                <input asp-for="email" class="form-control" />
+                <input asp-for="email" class="form-control form-Control-width" />
                 <span asp-validation-for="email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="fname" class="control-label"></label>
-                <input asp-for="fname" class="form-control" />
+                <input asp-for="fname" class="form-control form-Control-width" />
                 <span asp-validation-for="fname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="lname" class="control-label"></label>
-                <input asp-for="lname" class="form-control" />
+                <input asp-for="lname" class="form-control form-Control-width" />
                 <span asp-validation-for="lname" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -199,15 +200,25 @@
 
     /*----*/
 
-    .container {
-        border: 1px solid blue;
-        display: flow-root;
+    .navigationBar {
+        position: FIXED;
+        top: 10%;
+        LEFT: 0%;
+        width: 100%;
     }
 
-    .box {
-        border: 1px solid purple;
-        float: left;
+    .container {
+        position: absolute;
+        left: 14%;
+        top: 29%;
+        width: 64em;
     }
+
+   .form-Control-width
+   
+   {
+        width: 34%;
+   }
 
     /*---*/
     .shape-test-1 {

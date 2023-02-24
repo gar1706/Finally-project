@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Home/professors.cshtml";
+    
 }
 
 
@@ -38,9 +38,12 @@
     </style>
 </head>
 <body>
+    <div class="navigationBar">
 
     <!-- Links (sit on top) -->
+    <!-- Links (sit on top) -->
     <table>
+
 
 
         <tr>
@@ -67,12 +70,23 @@
         </tr>
         <tr>
             <div class="w3-col s3">
+                <a href="/student_course" class="w3-button w3-block">Student_Course</a>
+            </div>
+        </tr>
+        <tr>
+            <div class="w3-col s3">
+                <a href="/Professors_Hours" class="w3-button w3-block">Professors_Hours</a>
+            </div>
+        </tr>
+
+        <tr>
+            <div class="w3-col s3">
                 <a href=" /Users/logout" class="w3-button w3-block">logout</a>
             </div>
-            <
+
         </tr>
     </table>
-
+    </div>
 
     <div class="container">
         <div class="box">
@@ -187,9 +201,19 @@
 
     /*----*/
 
+    .navigationBar{
+        position: FIXED;
+        top: 10%;
+        LEFT: 0%;
+        width: 100%;
+    
+    }
+
     .container {
-        border: 1px solid blue;
-        display: flow-root;
+        position: absolute;
+        left: 14%;
+        top: 29%;
+        width: 64em;
     }
 
     .box {

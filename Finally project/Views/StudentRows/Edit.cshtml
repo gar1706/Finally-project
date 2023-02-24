@@ -1,17 +1,13 @@
 ﻿@model Finally_project.Models.StudentRow
 
 @{
-    Layout = null;
+    
+    ViewData["Title"] = "Edit";
+    StudentRow row = (StudentRow)ViewData["row"];
+
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
+      
+<h1>Edit</h1>
 
 <h4>StudentRow</h4>
 <hr />
@@ -19,39 +15,39 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id" value="@row.Id" />
             <div class="form-group">
                 <label asp-for="phone" class="control-label"></label>
-                <input asp-for="phone" class="form-control" />
+                <input asp-for="phone" class="form-control" value="@row.phone" />
                 <span asp-validation-for="phone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="address" class="control-label"></label>
-                <input asp-for="address" class="form-control" />
+                <input asp-for="address" class="form-control" value="@row.address" />
                 <span asp-validation-for="address" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="email" class="control-label"></label>
-                <input asp-for="email" class="form-control" />
+                <input asp-for="email" class="form-control" value="@row.email" />
                 <span asp-validation-for="email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="courseTitle" class="control-label"></label>
-                <input asp-for="courseTitle" class="form-control" />
+                <input asp-for="courseTitle" class="form-control" value="@row.courseTitle" />
                 <span asp-validation-for="courseTitle" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="fname" class="control-label"></label>
-                <input asp-for="fname" class="form-control" />
+                <input asp-for="fname" class="form-control" value="@row.fname" />
                 <span asp-validation-for="fname" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="lname" class="control-label"></label>
-                <input asp-for="lname" class="form-control" />
+                <input asp-for="lname" class="form-control" value="@row.lname" />
                 <span asp-validation-for="lname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="edit" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -64,5 +60,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-</body>
-</html>
+ 
