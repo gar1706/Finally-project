@@ -1,12 +1,11 @@
-﻿@model Finally_project.Models.ProfessorRow
+﻿@model Finally_project.Models.Module
 
 @{
     ViewData["Title"] = "Create";
-  
 }
 
-
 <!DOCTYPE html>
+
 <html>
 <head>
     <title>W3.CSS Template</title>
@@ -39,128 +38,128 @@
 <body>
 
     <div class="navigationBar">
-    <!-- Links (sit on top) -->
+        <!-- Links (sit on top) -->
+        <table>
+
+
+
+            <tr>
+                <div class="w3-col s3">
+
+                    <a href="/StudentRows/" class="w3-button w3-block">Students</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+
+                    <a href="/StudentRows/create" class="w3-button w3-block">Add Students</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+                    <a href="/ProfessorRows" class="w3-button w3-block">Professors</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+                    <a href="/ProfessorRows/create" class="w3-button w3-block">Add Professors</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+                    <a href="/student_course" class="w3-button w3-block">Student_course</a>
+                </div>
+            </tr>
+            <tr>
+                <div class="w3-col s3">
+                    <a href="/Professors_Hours" class="w3-button w3-block">Professors_Hours</a>
+                </div>
+            </tr>
+
+            <tr>
+                <div class="w3-col s3">
+                    <a href=" /Users/logout" class="w3-button w3-block">logout</a>
+                </div>
+            </tr>
+        </table>
+    </div>
+
+
     <table>
 
 
 
-        <tr>
-            <div class="w3-col s3">
 
-                <a href="/StudentRows/" class="w3-button w3-block">Students</a>
-            </div>
-        </tr>
-        <tr>
-            <div class="w3-col s3">
 
-                <a href="/StudentRows/create" class="w3-button w3-block">Add Students</a>
-            </div>
-        </tr>
-        <tr>
-            <div class="w3-col s3">
-                <a href="/ProfessorRows" class="w3-button w3-block">Professors</a>
-            </div>
-        </tr>
-        <tr>
-            <div class="w3-col s3">
-                <a href="/ProfessorRows/create" class="w3-button w3-block">Add Professors</a>
-            </div>
-        </tr>
-        <tr>
-            <div class="w3-col s3">
-                <a href="/student_course" class="w3-button w3-block">Student_course</a>
-            </div>
-        </tr>
-        <tr>
-            <div class="w3-col s3">
-                <a href="/Professors_Hours" class="w3-button w3-block">Professors_Hours</a>
-            </div>
-        </tr>
-
-            <tr>
-                <div class="w3-col s3">
-                    <a href="/Module" class="w3-button w3-block">Module</a>
-                </div>
-            </tr>
-
-        <tr>
-            <div class="w3-col s3">
-                <a href=" /Users/logout" class="w3-button w3-block">logout</a>
-            </div>
-
-        </tr>
-    </table>
-   </div>
-      
-     <div class="container">
-            <form asp-action="Create">
+    <div class="container">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control form-Control-width" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
+             <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control form-Control-width" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+             </div>
+
 
             <div class="form-group">
-                <label asp-for="phone" class="control-label"></label>
-                <input asp-for="phone" class="form-control form-Control-width" />
-                <span asp-validation-for="phone" class="text-danger"></span>
+                <label asp-for="courseTitle" class="control-label"></label>
+                <input asp-for="courseTitle" class="form-control" />
+                <span asp-validation-for="courseTitle" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="email" class="control-label"></label>
-                <input asp-for="email" class="form-control form-Control-width" />
-                <span asp-validation-for="email" class="text-danger"></span>
+                <label asp-for="title" class="control-label"></label>
+                <input asp-for="title" class="form-control" />
+                <span asp-validation-for="title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="fname" class="control-label"></label>
-                <input asp-for="fname" class="form-control form-Control-width" />
-                <span asp-validation-for="fname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="lname" class="control-label"></label>
-                <input asp-for="lname" class="form-control form-Control-width" />
-                <span asp-validation-for="lname" class="text-danger"></span>
+                <label asp-for="hours" class="control-label"></label>
+                <input asp-for="hours" class="form-control" />
+                <span asp-validation-for="hours" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
-          </form>
-
-        <div>
-            <a asp-action="Home">Back to Home</a>
-        </div>
-                         
+        </form>
     </div>
-    <script>
-        // Slideshow
-        var slideIndex = 1;
-        showDivs(slideIndex);
+</div>
 
-        function plusDivs(n) {
-            showDivs(slideIndex += n);
-        }
+<div>
+    <a asp-action="Home">Back to Home</a>
+</div>
+</div>
 
-        function currentDiv(n) {
-            showDivs(slideIndex = n);
-        }
 
-        function showDivs(n) {
-            var i;
-            var x = document.getElementsByClassName("mySlides");
-            var dots = document.getElementsByClassName("demodots");
-            if (n > x.length) { slideIndex = 1 }
-            if (n < 1) { slideIndex = x.length };
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
+
+        <script>
+            //Slideshow
+            var slideIndex = 1;
+            showDivs(slideIndex);
+
+            function plusDivs(n) {
+                showDivs(slideIndex += n);
             }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" w3-white", "");
+
+            function currentDiv(n) {
+                showDivs(slideIndex = n);
             }
-            x[slideIndex - 1].style.display = "block";
-            dots[slideIndex - 1].className += " w3-white";
-        }
-    </script>
+
+            function showDivs(n) {
+                var i;
+                var x = document.getElementsByClassName("mySlides");
+                var dots = document.getElementsByClassName("demodots");
+                if (n > x.length) { slideIndex = 1 }
+                if (n < 1) { slideIndex = x.length };
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" w3-white", "");
+                }
+                x[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " w3-white";
+            }
+        </script>
 
 </body>
 </html>
@@ -220,11 +219,9 @@
         width: 64em;
     }
 
-   .form-Control-width
-   
-   {
+    .form-Control-width {
         width: 34%;
-   }
+    }
 
     /*---*/
     .shape-test-1 {
@@ -674,7 +671,9 @@
 
     }
 </style>
- 
+
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
