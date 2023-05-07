@@ -43,15 +43,23 @@
     <tr>
         <div class="form-group">
         <td> <label asp-for="Password" class="control-label" style="color:white"></label></td>
-        
-        <td>  <input asp-for="Password" class="form-control" />  <span asp-validation-for="Password" class="text-danger"></span></td>
+
+                <td>  <input asp-for="Password" class="form-control passwordClass" id="passwordText" onchange="verifyPassword()" type="password"/>  <span asp-validation-for="Password" class="text-danger"></span></td>
+                
         </div>
     </tr>
+            <tr>
+                <td colspan="2">
+                    
+                    </td>
+                <td colspan="2"><div class="errors" id="errors"> </div></td>
+                </td>
+            </tr>
     <tr>
        <td colspan="2"> <div class="form-group">
-            <input type="submit" value="Create" class="submit" />
+            <input type="submit" value="Create" class="submitButton" id="submit" />
             </div>
-                <td colspan="2"><a href="/users/" class=" submit">Login</a></td>
+                <td colspan="2"><a href="/users/" >Login</a></td>
         </td>
     </tr>
     <tr>
@@ -61,13 +69,50 @@
     </form>
 
 
+    <script>
 
+         function verifyPassword()
+         {
+            var passwordElement = document.getElementById('passwordText');
+
+            var pattern = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[a-zA-Z!#$%&? "])[a-zA-Z0-9!#$%&?]{8,15}$/;
+            var password = passwordElement.value ;
+            console.log(password ,"this is the password")
+            var button = document.getElementById('submit');
+            var element = document.getElementById("errors");
+
+            console.log(element)
+
+            //element.classList.toggle("hideElement");
+
+            if (password.match(pattern)) {
+                element.innerText = 'Password is strong';
+                button.classList.toggle("submitButton");
+            }
+            else {
+                element.innerText = 'Password is weak';
+            }
+         
+         }
+    </script>
      
 
  
     <style>
         * {
             margin: 0
+        }
+        .submit
+        
+        {
+            display:none;
+        }
+        errors{
+        
+        }
+
+        hideElement {
+            display: none;
         }
 
         .container {

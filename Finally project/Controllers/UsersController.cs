@@ -8,6 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Finally_project.Data;
 using Finally_project.Models;
 using System.Data;
+using System.Security.Cryptography;
+using System.Text;
+
+using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Finally_project.Controllers
 {
@@ -74,13 +80,15 @@ namespace Finally_project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Email,Password")] User user)
         {
-            if (ModelState.IsValid)
-            {
-
-                if (ModelState.IsValid)
-                {
+            
                     var datalayer = new SqlDataAccess();
 
+            //hash method and encrypt password
+
+                    user.Password = HashPasword(user.Password); 
+
+
+                       
                     var sql = prepareDataForInsert(user);
 
                     var response = datalayer.ExecuteNonQuery(sql);
@@ -88,10 +96,8 @@ namespace Finally_project.Controllers
 
 
                     return RedirectToAction(nameof(Index));
-                }
- 
-            }
-            return View(user);
+           
+          
         }
 
 
@@ -102,9 +108,70 @@ namespace Finally_project.Controllers
 
             return sqlQuery;
 
+
         }
 
-          public async Task<IActionResult> login(string password,string email)
+
+
+
+       public   string HashPasword(string password)
+        {
+
+            const int keySize = 20;
+            const int iterations = 350000;
+            HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
+
+           
+
+            var salt = RandomNumberGenerator.GetBytes(keySize);
+
+            var hash = Rfc2898DeriveBytes.Pbkdf2(
+                Encoding.UTF8.GetBytes(password.Trim()),
+                salt,
+                iterations,
+                hashAlgorithm,
+                keySize);
+
+            //return Convert.ToHexString(hash).ToString().Trim();
+
+            return password;
+        }
+
+      
+
+        bool VerifyPassword(string password, string hash)
+        {
+
+
+            try
+            {
+                const int keySize = 20;
+                const int iterations = 350000;
+                var salt = RandomNumberGenerator.GetBytes(keySize);
+                HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
+                byte[] hashToCompare = Rfc2898DeriveBytes.Pbkdf2(password, salt, iterations, hashAlgorithm, keySize);
+
+                var hashText = Convert.ToHexString(hashToCompare).ToString();
+
+                byte[] hashset = Convert.FromHexString(hash.Trim());
+
+                bool result =  hashToCompare.Equals(hashset);
+
+               
+                return true;
+          
+             
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+         
+        }
+
+
+        public async Task<IActionResult> login(string password,string email)
         {
             if (password != null)
             {
@@ -112,7 +179,7 @@ namespace Finally_project.Controllers
 
                 var sql = $"select * from Users where Email='{email}' ";
 
-                var response = datalayer.Execute(sql);
+                var response =  datalayer.Execute(sql);
 
                 var userpassword = "";
 
@@ -120,8 +187,12 @@ namespace Finally_project.Controllers
                 {
                     userpassword = item["password"].ToString();
 
+
+
                 }
 
+
+                bool passwordsmatch = VerifyPassword(password, userpassword);       
                 if (userpassword.Trim() == password.Trim())
                 {
                     // /Create session variable

@@ -8,11 +8,12 @@
         public string courseTitle { get; set; }
         //public string address { get; set; }
 
-        public string title { get; set; }
+        public string ModuleTitle { get; set; }
 
         //   public string courseTitle { get; set; }
 
-        public string  hours { get; set; }
+        public string  hours { get; set; }  
+        public string courseId { get; set; }
         
 
     }

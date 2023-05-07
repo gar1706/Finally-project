@@ -81,6 +81,12 @@
 
             <tr>
                 <div class="w3-col s3">
+                    <a href="/Modules/create" class="w3-button w3-block">Add Module</a>
+                </div>
+            </tr>
+            
+            <tr>
+                <div class="w3-col s3">
                     <a href=" /Users/logout" class="w3-button w3-block">logout</a>
                 </div>
 
@@ -93,10 +99,12 @@
             <table>
                 <tr>
 
-                    <th>Id</th>
-                    <th>CourseTitle</th>
-                    <th>Title</th>
+                    <th>ID</th>
+                    <th>Course ID</th>
+                    <th>Course Title</th>
+                    <th>Module Title</th>
                     <th>Hours</th>
+
 
 
                 </tr>
@@ -111,12 +119,13 @@
 
 
                         <td>@row.Id</td>
+                        <td>@row.courseId</td>
                         <td>@row.courseTitle</td>
-                        <td>@row.title</td>
+                        <td>@row.ModuleTitle</td>
                         <td>@row.hours</td>
                        
 
-                        <td>     @Html.ActionLink("Edit", "Edit", new { id=row.Id }) </td>
+                      @*  <td>     @Html.ActionLink("Edit", "Edit", new { id=row.Id }) </td>*@
 
                     </tr>
                     </form>

@@ -1,12 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Finally_project.Data;
+//using MailKit.Configuration;
 using Microsoft.Extensions.Options;
+using Finally_project.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Finally_projectContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Finally_projectContext") ?? throw new InvalidOperationException("Connection string 'Finally_projectContext' not found.")));
 
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof(MailSettings)));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
@@ -23,6 +26,7 @@ app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 
 app.UseRouting();
 

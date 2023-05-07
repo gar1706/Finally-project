@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Finally_project.Data;
 using Finally_project.Models;
 using System.Data;
+using System.Runtime.InteropServices.ObjectiveC;
 
 namespace Finally_project.Controllers
 {
@@ -36,8 +37,7 @@ namespace Finally_project.Controllers
                 dataRows = new List<Module>();
 
                 var dataAccessLayer = new SqlDataAccess();
-                var datatable = dataAccessLayer.Execute("SELECT [id] " +
-                    " ,[course$id]   ,[title]  ,[hours] FROM  [Module]");
+                var datatable = dataAccessLayer.Execute(" SELECT M.[id] as id   ,[course$id], M.[title] As ModuleTitle, C.[title] AS CourseTitle,[hours] FROM[Module] AS M, [Course] AS C where M.course$id = TRIM(C.id)");
 
 
                 foreach (DataRow item in datatable.Rows)
@@ -67,8 +67,9 @@ namespace Finally_project.Controllers
 
             var module = new Module()
             {
-                courseTitle = row["course$id"].ToString(),
-                title = row["title"].ToString(),
+                courseId = row["course$id"].ToString(),
+                ModuleTitle = row["ModuleTitle"].ToString(),
+                courseTitle = row["CourseTitle"].ToString(),
                 Id = int.Parse(row["id"].ToString()),
                 hours = row["hours"].ToString()
 
@@ -77,6 +78,14 @@ namespace Finally_project.Controllers
             return module;
 
         }
+        //method to redirect to home
+        public IActionResult Home()
+        {
+            return RedirectToAction("index", "Modules");
+        }
+
+
+
 
         // GET: Modules/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -86,14 +95,14 @@ namespace Finally_project.Controllers
                 return NotFound();
             }
 
-            var @module = await _context.Module
+            var module = await _context.Module
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (@module == null)
+            if (module == null)
             {
                 return NotFound();
             }
 
-            return View(@module);
+            return View(module);
         }
 
         // GET: Modules/Create
@@ -107,26 +116,86 @@ namespace Finally_project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,courseTitle,title,hours")] Module @module)
+        public async Task<IActionResult> Create([Bind("Id,courseTitle,ModuleTitle,hours,courseId")] Module module)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@module);
-                await _context.SaveChangesAsync();
+
+                var datalayer = new SqlDataAccess();
+
+
+                if (module.courseId == null)
+                {
+                    var sql = prepareDataForInsert(module);
+
+                    var response = datalayer.ExecuteNonQuery(sql);
+                }
+                else
+                {
+                    var sql = prepareDataForInsert(module);
+
+                    var courseSql = insertIntoCourseTableSqlQuery(module);
+
+                    var response = datalayer.ExecuteNonQuery(courseSql);
+                   var  response2 = datalayer.ExecuteNonQuery(sql);
+
+
+                }
+
+                  
                 return RedirectToAction(nameof(Index));
             }
-            return View(@module);
+            return View(module);
+        }
+
+        public string prepareDataForInsert(Module module)
+        {
+
+
+            string sqlQuery = $"";
+
+            //insert in the table Course
+
+            sqlQuery = $@"INSERT INTO [dbo].[Module] (   [title] ,[hours] ,[course$id])  
+                                VALUES    (  '{module.ModuleTitle}' ,'{module.hours}' ,'{module.courseId}') ";
+
+
+
+            return sqlQuery;
+
         }
 
 
 
+        public string insertIntoCourseTableSqlQuery(Module module)
+        {
+            //insert into course table
+
+            string sql = $@"  INSERT INTO [dbo].[Course](   [id],   [title] ) 
+                            VALUES(' {module.courseId}', '{module.courseTitle}');";
+
+            return sql;
+
+        }
+
+        public string prepareDataForUPdate(Module module)
+        {
+            string sqlQuery = $@"UPDATE [dbo].[Module]
+                    SET  [title] ='{module.ModuleTitle}'
+                        ,[hours] = '{module.hours}'
+                        ,[course$id] ='{module.courseTitle}'
+                    Where id = {module.Id}";
+
+            return sqlQuery;
+
+        }
+
         public string getRowData(int id)
         {
-            
-            string sqlQuery = $@"SELECT [id]  
-                   ,[course$id]   ,[title]  ,[hours] 
+
+            string sqlQuery = $@"SELECT [Module].[id] as id,[course$id], [title]  ,[hours] 
                     FROM  [Module]  
-                    Where  [Module].[id]='{id}'";
+                    Where [Module].[id]='{id}'";
 
 
 
@@ -138,72 +207,71 @@ namespace Finally_project.Controllers
         // GET: Modules/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-
-
-
             var dataAccessLayer = new SqlDataAccess();
             var datatable = dataAccessLayer.Execute(this.getRowData(int.Parse(id.ToString())));
-
-            Module moduleRow = new Module();
-
+            Module module = new Module();
 
             foreach (DataRow item in datatable.Rows)
             {
 
-                moduleRow = prepareData(item);
-                ViewData["Row"] = moduleRow;
+                module = prepareData(item);
+                ViewData["Row"] = module;
 
             }
 
-            if (id == null || _context.Module== null)
+            if (id == null || _context.Module == null)
             {
                 return NotFound();
             }
 
 
-            if (moduleRow == null)
+            if (module == null)
             {
                 return NotFound();
             }
 
 
-            return View(moduleRow);
-        
-    }
+            return View(module);
+
+        }
 
         // POST: Modules/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,courseTitle,title,hours")] Module @module)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,courseTitle,ModuleTitle,hours")] Module module)
         {
-            if (id != @module.Id)
-            {
-                return NotFound();
-            }
+            //get Users session variable from sessions storage
+            string? usersSession = HttpContext.Session.GetString("UserIsLoggedIn");
 
-            if (ModelState.IsValid)
+
+            //if users are logged in , then execute code
+            if (!String.IsNullOrEmpty(usersSession))
             {
-                try
-                {
-                    _context.Update(@module);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ModuleExists(@module.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                 
+
+                    var datalayer = new SqlDataAccess();
+
+                    var sql = prepareDataForUPdate(module);
+
+                    var response = datalayer.ExecuteNonQuery(sql);
+
+
+
+                    return RedirectToAction(nameof(Index));
+
+              
             }
-            return View(@module);
+            else
+            {
+
+                //if the users are not logged in redirect to log in page
+
+                return RedirectToAction("index", "Users");
+
+            }
+            return View(module);
         }
 
         // GET: Modules/Delete/5
@@ -214,14 +282,14 @@ namespace Finally_project.Controllers
                 return NotFound();
             }
 
-            var @module = await _context.Module
+            var module = await _context.Module
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (@module == null)
+            if (module == null)
             {
                 return NotFound();
             }
 
-            return View(@module);
+            return View(module);
         }
 
         // POST: Modules/Delete/5
@@ -233,10 +301,10 @@ namespace Finally_project.Controllers
             {
                 return Problem("Entity set 'Finally_projectContext.Module'  is null.");
             }
-            var @module = await _context.Module.FindAsync(id);
-            if (@module != null)
+            var module = await _context.Module.FindAsync(id);
+            if (module != null)
             {
-                _context.Module.Remove(@module);
+                _context.Module.Remove(module);
             }
 
             await _context.SaveChangesAsync();

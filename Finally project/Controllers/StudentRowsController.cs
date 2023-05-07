@@ -194,9 +194,7 @@ namespace Finally_project.Controllers
 
                 var response = datalayer.ExecuteNonQuery(sql);
 
-
-
-                return RedirectToAction(nameof(Index));
+                 return RedirectToAction(nameof(Index));
             }
             return View(studentRow);
         }
@@ -217,6 +215,7 @@ namespace Finally_project.Controllers
                         ,[lname] ='{studentRow.lname}'
                         ,[email] = '{studentRow.email}'
                         ,[phone] = '{studentRow.phone}'
+                        ,[address] = '{studentRow.address}'
                         ,[course$id] ='{studentRow.courseTitle}'
                     Where id = {studentRow.Id}";
 
